@@ -233,7 +233,7 @@ Int_t StTriFlowMaker::Make()
             mTriFlowV0->passNumTrackWest(NumTrackWest[0],NumTrackWest[1],NumTrackWest[2],NumTrackWest[3]);
 
             mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,reweight);
-            //cout<<"finish phi meson reconstruction"<<endl;
+            cout<<"finish phi meson reconstruction"<<endl;
         }
         mTriFlowCorrection->clear();
     }
