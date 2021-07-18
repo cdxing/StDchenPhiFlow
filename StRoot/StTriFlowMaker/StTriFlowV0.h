@@ -49,6 +49,8 @@ class StTriFlowV0
     StTriFlowCut *mTriFlowCut;
     StV0TofCorrection *mTofCorr;
     TH2F *h_Mass2;
+    TH1D * hist_dip_angle;
+    
     Int_t mEventCounter2[9][10][5]; // 0 = centrality bin, 1 = vertexZ bin, 2 = EP bin
 
     // 0 = centrality bin, 1 = vertexZ bin, 2 = EP bin, 3 = mixed event bin, 4 = charge bin(0 for pos, 1 for neg) || push_back->track

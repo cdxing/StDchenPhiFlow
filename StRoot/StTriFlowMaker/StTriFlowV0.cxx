@@ -39,6 +39,7 @@ void StTriFlowV0::InitPhi()
     mTriFlowCut = new StTriFlowCut(mEnergy);
     TString HistName = "Mass2_pt";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
+    hist_dip_angle = new TH1D("hist_dip_angle","hist_dip_angle",1000,-1,1.0);
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
@@ -63,6 +64,7 @@ void StTriFlowV0::InitPhi()
 void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
+    hist_dip_angle->Write();
     mTree_Phi->Write("",TObject::kOverwrite);
 }
 
@@ -119,7 +121,7 @@ void StTriFlowV0::size_phi(Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2)
     for(Int_t Bin_Event = 0; Bin_Event < mEventCounter2[cent9][Bin_vz][Bin_Psi2]; Bin_Event++)
     {
         MEKey key = MEKey(cent9,Bin_vz,Bin_Psi2,Bin_Event,0);
-        LOG_INFO << "Event Number " << Bin_Event << ":" << endm; 
+        LOG_INFO << "Event Number " << Bin_Event << ":" << endm;
         LOG_INFO << "Positive Particle:" << endm;
         LOG_INFO << "  Size of Helix_Kplus  = " << mHelix_Kaon[key].size() << endm;;
         LOG_INFO << "  Size of Momentum     = " << mMomentum[key].size() << endm;
@@ -187,19 +189,22 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                 TVector3 p_vecA = mHelix_Kaon[key_plus][n_kplus].cat(mHelix_Kaon[key_plus][n_kplus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event]));  // primary momentum
                 p_vecA *= mMomentum[key_plus][n_kplus];
                 ltrackA.SetXYZM(p_vecA.X(),p_vecA.Y(),p_vecA.Z(),TriFlow::mMassKaon);
+                Double_t d_ptA = ltrackA.Px(), d_momA = ltrackA.P();
 
                 for(Int_t n_kminus = 0; n_kminus < mHelix_Kaon[key_minus].size(); n_kminus++) // second track loop over K- candidates
                 {
                     TVector3 p_vecB = mHelix_Kaon[key_minus][n_kminus].cat(mHelix_Kaon[key_minus][n_kminus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event]));  // primary momentum
                     p_vecB *= mMomentum[key_minus][n_kminus];
                     ltrackB.SetXYZM(p_vecB.x(),p_vecB.y(),p_vecB.z(),TriFlow::mMassKaon);
+                    Double_t d_ptB = ltrackB.Px(), d_momB = ltrackB.P();
 
+                    Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
                     TLorentzVector trackAB      = ltrackA+ltrackB;
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();
 
                     // fill phi candidate into mTree_Phi
-                    if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05) 
+                    if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05)
                     {
                         mXuPhiMesonTrack = mXuPhiMesonEvent->createTrack();
                         mXuPhiMesonTrack->setMass2A(mMass2[key_plus][n_kplus]); // K+
@@ -216,6 +221,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);
+                    // Fill histograms with for QA cuts: dip angle, etc.
+                    hist_dip_angle->Fill(d_dip_angle);
                 }
             }
         }
@@ -286,7 +293,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         Double_t pt = trackAB.Perp();
 
                         // fill phi candidate background into mTree_Phi
-                        if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05) 
+                        if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05)
                         {
                             mXuPhiMesonTrack = mXuPhiMesonEvent->createTrack();
                             mXuPhiMesonTrack->setMass2A(mMass2[key_A_plus][n_kplus]); // K+
@@ -303,6 +310,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 
                         // Fill histogram with InvMassAB information
                         h_Mass2->Fill(pt,InvMassAB);
+                        // Fill histograms with for QA cuts: dip angle, etc.
+                        hist_dip_angle->Fill(d_dip_angle);
                     }
                 }
 
@@ -324,7 +333,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         Double_t pt = trackAB.Perp();
 
                         // fill phi candidate background into mTree_Phi
-                        if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05) 
+                        if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05)
                         {
                             mXuPhiMesonTrack = mXuPhiMesonEvent->createTrack();
                             mXuPhiMesonTrack->setMass2A(mMass2[key_B_plus][n_kplus]); // K+
@@ -341,6 +350,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 
                         // Fill histogram with InvMassAB information
                         h_Mass2->Fill(pt,InvMassAB);
+                        // Fill histograms with for QA cuts: dip angle, etc.
+                        hist_dip_angle->Fill(d_dip_angle);
                     }
                 }
             }
@@ -465,9 +476,9 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
                     mDca[key].push_back(static_cast<Float_t>(dca*track->charge())); // dca*charge //shaowei
                     mNHitsFit[key].push_back(static_cast<Float_t>(track->nHitsFit())); // nHitsFit
                     mNSigmaKaon[key].push_back(static_cast<Float_t>((track->nSigmaKaon())*scale_nSigma_factor)); // nSigmaKaon
-                    //mHelix_Kaon[key].push_back(static_cast<StPhysicalHelixD>(StPhysicalHelixD(track->pMom(),event->primaryVertex(),event->bField()*MAGFIELDFACTOR,track->charge())));// get helix from the pMom 
-                    mHelix_Kaon[key].push_back(static_cast<StPicoPhysicalHelix>(StPicoPhysicalHelix(track->pMom(),event->primaryVertex(),event->bField()*MAGFIELDFACTOR,track->charge())));// get helix from the pMom 
-                    mMomentum[key].push_back(static_cast<Float_t>(track->pMom().Mag()));// get helix from the pMom 
+                    //mHelix_Kaon[key].push_back(static_cast<StPhysicalHelixD>(StPhysicalHelixD(track->pMom(),event->primaryVertex(),event->bField()*MAGFIELDFACTOR,track->charge())));// get helix from the pMom
+                    mHelix_Kaon[key].push_back(static_cast<StPicoPhysicalHelix>(StPicoPhysicalHelix(track->pMom(),event->primaryVertex(),event->bField()*MAGFIELDFACTOR,track->charge())));// get helix from the pMom
+                    mMomentum[key].push_back(static_cast<Float_t>(track->pMom().Mag()));// get helix from the pMom
                 }
             }
         }
