@@ -189,14 +189,14 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                 TVector3 p_vecA = mHelix_Kaon[key_plus][n_kplus].cat(mHelix_Kaon[key_plus][n_kplus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event]));  // primary momentum
                 p_vecA *= mMomentum[key_plus][n_kplus];
                 ltrackA.SetXYZM(p_vecA.X(),p_vecA.Y(),p_vecA.Z(),TriFlow::mMassKaon);
-                Double_t d_ptA = ltrackA.Px(), d_momA = ltrackA.P();
+                Double_t d_ptA = ltrackA.Perp(), d_pzA = ltrackA.Pz(), d_momA = ltrackA.P();
 
                 for(Int_t n_kminus = 0; n_kminus < mHelix_Kaon[key_minus].size(); n_kminus++) // second track loop over K- candidates
                 {
                     TVector3 p_vecB = mHelix_Kaon[key_minus][n_kminus].cat(mHelix_Kaon[key_minus][n_kminus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event]));  // primary momentum
                     p_vecB *= mMomentum[key_minus][n_kminus];
                     ltrackB.SetXYZM(p_vecB.x(),p_vecB.y(),p_vecB.z(),TriFlow::mMassKaon);
-                    Double_t d_ptB = ltrackB.Px(), d_momB = ltrackB.P();
+                    Double_t d_ptB = ltrackB.Perp(), d_pzB = ltrackB.Pz(), d_momB = ltrackB.P();
 
                     Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
                     TLorentzVector trackAB      = ltrackA+ltrackB;
@@ -281,14 +281,14 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     TVector3 p_vecA(mHelix_Kaon[key_A_plus][n_kplus].cat(mHelix_Kaon[key_A_plus][n_kplus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event_A])));  // primary momentum
                     p_vecA *= mMomentum[key_A_plus][n_kplus];
                     ltrackA.SetXYZM(p_vecA.X(),p_vecA.Y(),p_vecA.Z(),TriFlow::mMassKaon); // K+
-                    Double_t d_ptA = ltrackA.Px(), d_momA = ltrackA.P();
+                    Double_t d_ptA = ltrackA.Perp(), d_pzA = ltrackA.Pz(), d_momA = ltrackA.P();
 
                     for(Int_t n_kminus = 0; n_kminus < mHelix_Kaon[key_B_minus].size(); n_kminus++) // second track loop over K- candidates from event B
                     {
                         TVector3 p_vecB(mHelix_Kaon[key_B_minus][n_kminus].cat(mHelix_Kaon[key_B_minus][n_kminus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event_B])));  // primary momentum
                         p_vecB *= mMomentum[key_B_minus][n_kminus];
                         ltrackB.SetXYZM(p_vecB.x(),p_vecB.y(),p_vecB.z(),TriFlow::mMassKaon); // K-
-                        Double_t d_ptB = ltrackB.Px(), d_momB = ltrackB.P();
+                        Double_t d_ptB = ltrackB.Perp(), d_pzB = ltrackB.Pz(), d_momB = ltrackB.P();
 
                         Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
                         TLorentzVector trackAB      = ltrackA+ltrackB;
@@ -324,14 +324,14 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     TVector3 p_vecA(mHelix_Kaon[key_A_minus][n_kminus].cat(mHelix_Kaon[key_A_minus][n_kminus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event_A])));  // primary momentum
                     p_vecA *= mMomentum[key_A_minus][n_kminus];
                     ltrackA.SetXYZM(p_vecA.X(),p_vecA.Y(),p_vecA.Z(),TriFlow::mMassKaon); // K-
-                    Double_t d_ptA = ltrackA.Px(), d_momA = ltrackA.P();
+                    Double_t d_ptA = ltrackA.Perp(), d_pzA = ltrackA.Pz(), d_momA = ltrackA.P();
 
                     for(Int_t n_kplus = 0; n_kplus < mHelix_Kaon[key_B_plus].size(); n_kplus++) // second track loop over K+ candidates from event B
                     {
                         TVector3 p_vecB(mHelix_Kaon[key_B_plus][n_kplus].cat(mHelix_Kaon[key_B_plus][n_kplus].pathLength(mPrimaryvertex[cent9][Bin_vz][Bin_Psi2][Bin_Event_B])));  // primary momentum
                         p_vecB *= mMomentum[key_B_plus][n_kplus];
                         ltrackB.SetXYZM(p_vecB.x(),p_vecB.y(),p_vecB.z(),TriFlow::mMassKaon); // K+
-                        Double_t d_ptB = ltrackB.Px(), d_momB = ltrackB.P();
+                        Double_t d_ptB = ltrackB.Perp(), d_pzB = ltrackB.Pz(), d_momB = ltrackB.P();
 
                         Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
                         TLorentzVector trackAB      = ltrackA+ltrackB;
