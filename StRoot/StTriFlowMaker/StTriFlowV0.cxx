@@ -209,8 +209,9 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     Double_t randomNumber = gRandom->Uniform(1);
                     // std::cout << "randomNumber = " << randomNumber << std::endl;
                     Double_t d_randAngle = TMath::Pi()*randomNumber;
-                    TLorentzVector ltrackB_rot = ltrackB.RotateZ(d_randAngle);
-
+                    
+                    TLorentzVector ltrackB_rot = ltrackB;
+                    ltrackB_rot.RotateZ(d_randAngle);
                     TLorentzVector trackAB_rot      = ltrackA+ltrackB_rot;
                     Double_t InvMassAB_rot          = trackAB_rot.M();
                     Double_t pt_rot = trackAB_rot.Perp();
