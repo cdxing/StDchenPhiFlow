@@ -184,7 +184,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
             MEKey key_plus  = MEKey(cent9,Bin_vz,Bin_Psi2,Bin_Event,0);
             MEKey key_minus = MEKey(cent9,Bin_vz,Bin_Psi2,Bin_Event,1);
 
-            TLorentzVector ltrackA, ltrackB, ltrackB_rot;
+            TLorentzVector ltrackA, ltrackB;
             //cout <<"K+ number = " <<  mHelix_Kaon[key_plus].size() << endl;
             for(Int_t n_kplus = 0; n_kplus < mHelix_Kaon[key_plus].size(); n_kplus++) // first track loop over K+ candidates
             {
@@ -209,7 +209,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     Double_t randomNumber = gRandom->Uniform(1);
                     // std::cout << "randomNumber = " << randomNumber << std::endl;
                     Double_t d_randAngle = TMath::Pi()*randomNumber;
-                    ltrackB_rot = ltrackB.RotateZ(d_randAngle);
+                    TLorentzVector ltrackB_rot = ltrackB.RotateZ(d_randAngle);
 
                     TLorentzVector trackAB_rot      = ltrackA+ltrackB_rot;
                     Double_t InvMassAB_rot          = trackAB_rot.M();
