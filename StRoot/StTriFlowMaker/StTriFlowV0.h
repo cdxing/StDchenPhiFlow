@@ -5,6 +5,7 @@
 #include "StPhysicalHelixD.hh"
 #include "StTriFlowMEKey.h"
 #include <vector>
+#include "TRandom3.h"
 #include "TVector2.h"
 #include "TVector3.h"
 
@@ -16,7 +17,6 @@ class StV0Event;
 class StV0Track;
 class StTriFlowCut;
 class TH1F;
-class TH1D;
 class TH2F;
 class TTree;
 class TVector2;
@@ -50,7 +50,8 @@ class StTriFlowV0
     StTriFlowCut *mTriFlowCut;
     StV0TofCorrection *mTofCorr;
     TH2F *h_Mass2;
-    TH1D *hist_dip_angle;
+    TH2F *h_Mass2_rot;
+    TH1F *hist_dip_angle;
 
     Int_t mEventCounter2[9][10][5]; // 0 = centrality bin, 1 = vertexZ bin, 2 = EP bin
 

@@ -37,9 +37,10 @@ StTriFlowV0::~StTriFlowV0()
 void StTriFlowV0::InitPhi()
 {
     mTriFlowCut = new StTriFlowCut(mEnergy);
-    TString HistName = "Mass2_pt";
+    TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
-    hist_dip_angle = new TH1D("hist_dip_angle","hist_dip_angle",1000,-1,1.0);
+    h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
+    hist_dip_angle = new TH1F("hist_dip_angle","hist_dip_angle",1000,-1,1.0);
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
@@ -182,7 +183,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
             MEKey key_plus  = MEKey(cent9,Bin_vz,Bin_Psi2,Bin_Event,0);
             MEKey key_minus = MEKey(cent9,Bin_vz,Bin_Psi2,Bin_Event,1);
 
-            TLorentzVector ltrackA, ltrackB;
+            TLorentzVector ltrackA, ltrackB, ltrackB_rot;
             //cout <<"K+ number = " <<  mHelix_Kaon[key_plus].size() << endl;
             for(Int_t n_kplus = 0; n_kplus < mHelix_Kaon[key_plus].size(); n_kplus++) // first track loop over K+ candidates
             {
@@ -203,6 +204,9 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();
 
+                    // do the rotation for track B
+                    Double_t randomNumber = gRandom->Uniform(1);
+                    std::cout << "randomNumber = " << randomNumber << std::endl;
                     // fill phi candidate into mTree_Phi
                     if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05)
                     {

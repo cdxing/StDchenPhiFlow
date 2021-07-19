@@ -33,6 +33,7 @@ void readPicoDst(const Char_t *inputFile="test.list", char* outputFile="test")
     int total = picoMaker->chain()->GetEntries();
     cout << "ok !     "  << endl;
     cout << " Total entries = " << total << endl;
+    gRandom = new TRandom3(0);
     if(nEvents>total) nEvents = total;
     for (Int_t i=0; i<nEvents; i++)
     {
@@ -50,7 +51,7 @@ void readPicoDst(const Char_t *inputFile="test.list", char* outputFile="test")
         int iret = chain->Make(i);
 
         if (iret)
-        { 
+        {
             cout << "Bad return code!" << iret << endl;
             break;
         }
