@@ -36,12 +36,12 @@ ClassImp(StTriFlowMaker)
 
 }
 
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 StTriFlowMaker::~StTriFlowMaker()
 { /*  */ }
 
-//----------------------------------------------------------------------------- 
-Int_t StTriFlowMaker::Init() 
+//-----------------------------------------------------------------------------
+Int_t StTriFlowMaker::Init()
 {
 
     //if(!mRefMultCorr)
@@ -60,8 +60,8 @@ Int_t StTriFlowMaker::Init()
     return kStOK;
 }
 
-//----------------------------------------------------------------------------- 
-Int_t StTriFlowMaker::Finish() 
+//-----------------------------------------------------------------------------
+Int_t StTriFlowMaker::Finish()
 {
     mFile_Phi = new TFile(mOutPut_Phi.Data(),"RECREATE");
     //mFile_Phi->cd();
@@ -74,21 +74,21 @@ Int_t StTriFlowMaker::Finish()
     return kStOK;
 }
 
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 void StTriFlowMaker::Clear(Option_t *opt) {
 }
 
-//----------------------------------------------------------------------------- 
-Int_t StTriFlowMaker::Make() 
+//-----------------------------------------------------------------------------
+Int_t StTriFlowMaker::Make()
 {
-    if(!mPicoDstMaker) 
+    if(!mPicoDstMaker)
     {
         LOG_WARN << " No PicoDstMaker! Skip! " << endm;
         return kStWarn;
     }
 
     mPicoDst = mPicoDstMaker->picoDst();
-    if(!mPicoDst) 
+    if(!mPicoDst)
     {
         LOG_WARN << " No PicoDst! Skip! " << endm;
         return kStWarn;
@@ -185,7 +185,7 @@ Int_t StTriFlowMaker::Make()
         Float_t Psi2_East;
         TVector2 Q2East[TriFlow::EtaGap_total], Q2West[TriFlow::EtaGap_total];
         TVector2 Q3East[TriFlow::EtaGap_total], Q3West[TriFlow::EtaGap_total];
-        Int_t NumTrackEast[TriFlow::EtaGap_total], NumTrackWest[TriFlow::EtaGap_total]; 
+        Int_t NumTrackEast[TriFlow::EtaGap_total], NumTrackWest[TriFlow::EtaGap_total];
         for(Int_t j = 0; j < TriFlow::EtaGap_total; j++)
         {
             Q2East[j].Set(-999.9,-999.9); // initialize Q Vector to unreasonable value
@@ -233,7 +233,7 @@ Int_t StTriFlowMaker::Make()
             mTriFlowV0->passNumTrackWest(NumTrackWest[0],NumTrackWest[1],NumTrackWest[2],NumTrackWest[3]);
 
             mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,reweight);
-            cout<<"finish phi meson reconstruction"<<endl;
+            // cout<<"finish phi meson reconstruction"<<endl;
         }
         mTriFlowCorrection->clear();
     }
@@ -270,5 +270,3 @@ int StTriFlowMaker::Centrality(int gRefMult )
 
     return centrality;
 }
-
-

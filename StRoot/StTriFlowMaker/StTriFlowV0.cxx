@@ -65,6 +65,7 @@ void StTriFlowV0::InitPhi()
 void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
+    h_Mass2_rot->Write();
     hist_dip_angle->Write();
     mTree_Phi->Write("",TObject::kOverwrite);
 }
@@ -206,8 +207,14 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 
                     // do the rotation for track B
                     Double_t randomNumber = gRandom->Uniform(1);
-                    std::cout << "randomNumber = " << randomNumber << std::endl;
-                    // fill phi candidate into mTree_Phi
+                    // std::cout << "randomNumber = " << randomNumber << std::endl;
+                    Double_t d_randAngle = TMath::Pi()*randomNumber;
+                    ltrackB_rot = ltrackB.RotateZ(d_randAngle);
+
+                    TLorentzVector trackAB_rot      = ltrackA+ltrackB_rot;
+                    Double_t InvMassAB_rot          = trackAB_rot.M();
+                    Double_t pt_rot = trackAB_rot.Perp();
+              // fill phi candidate into mTree_Phi
                     if(InvMassAB > TriFlow::mMassKaon*2 && InvMassAB < 1.05)
                     {
                         mXuPhiMesonTrack = mXuPhiMesonEvent->createTrack();
@@ -225,6 +232,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);
+                    h_Mass2_rot->Fill(pt_rot,InvMassAB_rot);
                     // Fill histograms with for QA cuts: dip angle, etc.
                     hist_dip_angle->Fill(d_dip_angle);
                 }
