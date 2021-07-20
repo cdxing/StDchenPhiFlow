@@ -54,6 +54,8 @@ Float_t TriFlow::pt_low[14] = {0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2
 Float_t TriFlow::pt_up[14]  = {0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0};
 Float_t TriFlow::pt_low_spectra[32] = {0.15,0.25,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.2,3.4,3.8};
 Float_t TriFlow::pt_up_spectra[32]  = {0.25,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.2,3.4,3.8,4.2};
+Float_t TriFlow::pt_low_phi[3] = {0.2,1.0,1.4};
+Float_t TriFlow::pt_up_phi[3]  = {1.0,1.4,3.4};
 // x and y range
 //                              0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7 ,  8 ,  9 ,  10
 Float_t TriFlow::x_low[14] = {-0.4,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.8,-0.8,-1.0,-1.0,-1.0,-1.0,-1.0};
@@ -105,6 +107,8 @@ TString TriFlow::Energy[5] = {"200GeV","54GeV","39GeV","7GeV","15GeV"};
 
 // mix event
 Int_t TriFlow::Bin_Centrality = 9;
+Int_t TriFlow::Bin_Centrality_01 = 4;
+Int_t TriFlow::Bin_pT = 3;
 Int_t TriFlow::Bin_VertexZ = 10;
 Int_t TriFlow::Bin_Phi_Psi = 5;
 Int_t TriFlow::Buffer_depth = 5;

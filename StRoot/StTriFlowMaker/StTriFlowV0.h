@@ -55,9 +55,9 @@ class StTriFlowV0
     TH2F *h2_pT_y;
     TH1F *h_mT;
     TH1F *h_dip_angle;
-    // TH1F *h_dip_angle;
-    // TH1F *h_dip_angle;
-    // TH1F *h_dip_angle;
+    TH1D *mHist_SE_InvM_ptSetA_centSetA[3][4];
+    TH1D *mHist_rotation_InvM_ptSetA_centSetA[3][4];
+    TProfile *mProfile_v2_reso_ptSetA_centSetA[3][4];
 
     Int_t mEventCounter2[9][10][5]; // 0 = centrality bin, 1 = vertexZ bin, 2 = EP bin
 

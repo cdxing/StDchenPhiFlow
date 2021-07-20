@@ -47,6 +47,17 @@ void StTriFlowV0::InitPhi()
     h_mT = new TH1F(HistName_mt.Data(),HistName_mt.Data(),200,0.0,10);
     h_dip_angle = new TH1F(HistName_dip.Data(),HistName_dip.Data(),200,-(1.0/4.0)*TMath::Pi(),1.0*TMath::Pi());
 
+    for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
+    {
+        for(Int_t pt = 0; pt < TriFlow::Bin_pT; pt++)
+        {
+          mHist_SE_InvM_ptSetA_centSetA[pt][cent] = new TH1D(Form("Hist_SE_InvM_ptSetA%d_cent%d",pt,TriFlow::Centrality_01[cent]),
+          Form("Hist_SE_InvM_ptSetA%d_cent%d",pt,TriFlow::Centrality_01[cent]),
+          200,0.98,1.08);
+          mHist_SE_InvM_ptSetA_centSetA[pt][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
+        }
+    }
+
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
         for(Int_t vz = 0; vz < TriFlow::Bin_VertexZ; vz++)
@@ -75,6 +86,13 @@ void StTriFlowV0::WritePhiMass2()
     h2_pT_y->Write();
     h_mT->Write();
     h_dip_angle->Write();
+    for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
+    {
+        for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
+        {
+          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Write();
+        }
+    }
     mTree_Phi->Write("",TObject::kOverwrite);
 }
 
@@ -249,6 +267,18 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h2_pT_eta->Fill(eta,pt);
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
+                    // Fill hisograms for invM fit Method
+                    for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
+                    {
+                        for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
+                        {
+                          if(TriFlow::cent_low[cent]<= cent9 <= TriFlow::cent_up[cent] &&
+                             TriFlow::pt_low_phi[pt_bin] <= pt <= TriFlow::pt_up_phi[pt_bin])
+                             {
+                               mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
+                             }
+                        }
+                    }
                 }
             }
         }
