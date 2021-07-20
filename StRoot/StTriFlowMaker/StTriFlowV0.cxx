@@ -52,7 +52,7 @@ void StTriFlowV0::InitPhi()
         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
         {
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(Form("Hist_SE_InvM_ptSetA%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data(),
-          Form("Hist_SE_InvM_ptSetA%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data(),
+          Form("Hist_SE_InvM_ptSetA%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data()),
           200,0.98,1.08);
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
         }
@@ -272,8 +272,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     {
                         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
                         {
-                          if(TriFlow::cent_low[cent]<= cent9 <= TriFlow::cent_up[cent] &&
-                             TriFlow::pt_low_phi[pt_bin] <= pt <= TriFlow::pt_up_phi[pt_bin])
+                          if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
+                             TriFlow::pt_low_phi[pt_bin] <= pt && pt <= TriFlow::pt_up_phi[pt_bin])
                              {
                                mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
                              }
