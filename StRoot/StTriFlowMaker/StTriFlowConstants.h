@@ -29,7 +29,7 @@ class TriFlow
   static Float_t mPrimPtWeight; // 2.0
   static Float_t mPrimMomMax; // 10.0
   static Float_t mMass2Min; // -10.0
-  static Double_t MAGFIELDFACTOR; // kilogauss  
+  static Double_t MAGFIELDFACTOR; // kilogauss
   static Int_t mTrackMin; // 2
   static Int_t mTrackMin_Full; // 4
   static Float_t mToFYLocalMax; // 1.8
@@ -41,6 +41,7 @@ class TriFlow
   static Float_t mMassPion; // 0.13957
   static Float_t mMassKaon; // 0.49368
   static Float_t mMassProton; // 0.93827
+  static Float_t mMassPhi; // 1.019461
   static Float_t mVzVpdDiffMax; // 3
   static std::map<float,float> mSigScaleMap;
 
