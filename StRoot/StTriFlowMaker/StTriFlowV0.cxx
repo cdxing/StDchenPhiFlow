@@ -40,7 +40,7 @@ void StTriFlowV0::InitPhi()
     TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
-    h_dip_angle = new TH1F("h_dip_angle","h_dip_angle",200,-1,2.0*TMath:Pi());
+    h_dip_angle = new TH1F("h_dip_angle","h_dip_angle",200,-1,2.0*TMath::Pi());
     h_mT = new TH1F("h_mT","h_mT",200,0.0,10);
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
@@ -67,10 +67,7 @@ void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
     h_Mass2_rot->Write();
-    if(Flag_ME==0)
-    {
-      h_mT->Write();
-    }
+    h_mT->Write();
     h_dip_angle->Write();
     mTree_Phi->Write("",TObject::kOverwrite);
 }
