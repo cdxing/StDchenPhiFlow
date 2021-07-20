@@ -40,7 +40,8 @@ void StTriFlowV0::InitPhi()
     TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
-    hist_dip_angle = new TH1F("hist_dip_angle","hist_dip_angle",1000,-1,1.0);
+    h_dip_angle = new TH1F("h_dip_angle","h_dip_angle",200,-1,2.0*TMath:Pi());
+    h_mT = new TH1F("h_mT","h_mT",200,0.0,10);
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
@@ -66,7 +67,11 @@ void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
     h_Mass2_rot->Write();
-    hist_dip_angle->Write();
+    if(Flag_ME==0)
+    {
+      h_mT->Write();
+    }
+    h_dip_angle->Write();
     mTree_Phi->Write("",TObject::kOverwrite);
 }
 
@@ -204,12 +209,12 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     TLorentzVector trackAB      = ltrackA+ltrackB;
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();
-
+                    Double_t d_mT_phi = sqrt(pt*pt + TriFlow::mMassPhi*TriFlow::mMassPhi );
                     // do the rotation for track B
                     Double_t randomNumber = gRandom->Uniform(1);
                     // std::cout << "randomNumber = " << randomNumber << std::endl;
                     Double_t d_randAngle = TMath::Pi()*randomNumber;
-                    
+
                     TLorentzVector ltrackB_rot = ltrackB;
                     ltrackB_rot.RotateZ(d_randAngle);
                     TLorentzVector trackAB_rot      = ltrackA+ltrackB_rot;
@@ -235,7 +240,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_Mass2->Fill(pt,InvMassAB);
                     h_Mass2_rot->Fill(pt_rot,InvMassAB_rot);
                     // Fill histograms with for QA cuts: dip angle, etc.
-                    hist_dip_angle->Fill(d_dip_angle);
+                    h_mT->Fill(d_mT_phi);
+                    h_dip_angle->Fill(d_dip_angle);
                 }
             }
         }
@@ -327,7 +333,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Fill histogram with InvMassAB information
                         h_Mass2->Fill(pt,InvMassAB);
                         // Fill histograms with for QA cuts: dip angle, etc.
-                        hist_dip_angle->Fill(d_dip_angle);
+                        h_dip_angle->Fill(d_dip_angle);
                     }
                 }
 
@@ -370,7 +376,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Fill histogram with InvMassAB information
                         h_Mass2->Fill(pt,InvMassAB);
                         // Fill histograms with for QA cuts: dip angle, etc.
-                        hist_dip_angle->Fill(d_dip_angle);
+                        h_dip_angle->Fill(d_dip_angle);
                     }
                 }
             }

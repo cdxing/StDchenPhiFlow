@@ -38,6 +38,7 @@ Float_t TriFlow::mNSigmaProtonMax = 2.5;
 Float_t TriFlow::mMassPion = 0.13957;
 Float_t TriFlow::mMassKaon = 0.49368;
 Float_t TriFlow::mMassProton = 0.93827;
+Float_t TriFlow::mMassPhi = 1.019461;
 Float_t TriFlow::mVzVpdDiffMax = 3.0;
 Float_t TriFlow::mEta_Gap[4] = {0.05,0.10,0.20,0.50};
 

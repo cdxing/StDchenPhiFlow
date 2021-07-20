@@ -51,7 +51,11 @@ class StTriFlowV0
     StV0TofCorrection *mTofCorr;
     TH2F *h_Mass2;
     TH2F *h_Mass2_rot;
-    TH1F *hist_dip_angle;
+    TH1F *h_dip_angle;
+    TH1F *h_mT;
+    // TH1F *h_dip_angle;
+    // TH1F *h_dip_angle;
+    // TH1F *h_dip_angle;
 
     Int_t mEventCounter2[9][10][5]; // 0 = centrality bin, 1 = vertexZ bin, 2 = EP bin
 
