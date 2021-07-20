@@ -38,10 +38,14 @@ void StTriFlowV0::InitPhi()
 {
     mTriFlowCut = new StTriFlowCut(mEnergy);
     TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
+    TString HistName_mt = "mT", HistName_dip = "dip_angle";
+    TString HistName_ptEta = "pT_eta", HistName_ptY = "pT_y";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
-    h_dip_angle = new TH1F("h_dip_angle","h_dip_angle",200,-1,2.0*TMath::Pi());
-    h_mT = new TH1F("h_mT","h_mT",200,0.0,10);
+    h2_pT_eta = new TH2F(HistName_ptEta.Data(),HistName_ptEta.Data(),200,-2.0,2.0,20,0.2,5.0);
+    h2_pT_y = new TH2F(HistName_ptY.Data(),HistName_ptY.Data(),200,-2.0,2.0,20,0.2,5.0);
+    h_mT = new TH1F(HistName_mt.Data(),HistName_mt.Data(),200,0.0,10);
+    h_dip_angle = new TH1F(HistName_dip.Data(),HistName_dip.Data(),200,-(1.0/4.0)*TMath::Pi(),1.0*TMath::Pi());
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
@@ -67,6 +71,8 @@ void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
     h_Mass2_rot->Write();
+    h2_pT_eta->Write();
+    h2_pT_y->Write();
     h_mT->Write();
     h_dip_angle->Write();
     mTree_Phi->Write("",TObject::kOverwrite);
@@ -206,6 +212,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     TLorentzVector trackAB      = ltrackA+ltrackB;
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();
+                    Double_t eta = trackAB.Eta();
+                    Double_t rap = trackAB.Rapidity();
                     Double_t d_mT_phi = sqrt(pt*pt + TriFlow::mMassPhi*TriFlow::mMassPhi );
                     // do the rotation for track B
                     Double_t randomNumber = gRandom->Uniform(1);
@@ -237,6 +245,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_Mass2->Fill(pt,InvMassAB);
                     h_Mass2_rot->Fill(pt_rot,InvMassAB_rot);
                     // Fill histograms with for QA cuts: dip angle, etc.
+                    h2_pT_y->Fill(rap,pt);
+                    h2_pT_eta->Fill(eta,pt);
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
                 }
