@@ -49,12 +49,12 @@ void StTriFlowV0::InitPhi()
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
     {
-        for(Int_t pt = 0; pt < TriFlow::Bin_pT; pt++)
+        for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
         {
-          mHist_SE_InvM_ptSetA_centSetA[pt][cent] = new TH1D(Form("Hist_SE_InvM_ptSetA%d_cent%d",pt,TriFlow::Centrality_01[cent]),
-          Form("Hist_SE_InvM_ptSetA%d_cent%d",pt,TriFlow::Centrality_01[cent]),
+          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1D(Form("Hist_SE_InvM_ptSetA%d_cent%d",pt_bin,TriFlow::Centrality_01[cent]),
+          Form("Hist_SE_InvM_ptSetA%d_cent%d",pt_bin,TriFlow::Centrality_01[cent]),
           200,0.98,1.08);
-          mHist_SE_InvM_ptSetA_centSetA[pt][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
+          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
         }
     }
 

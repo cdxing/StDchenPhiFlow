@@ -56,6 +56,9 @@ class TriFlow
   static Float_t pt_up[14];
   static Float_t pt_low_spectra[32];
   static Float_t pt_up_spectra[32];
+  static Float_t pt_low_phi[3];
+  static Float_t pt_up_phi[3]};
+
   static Float_t x_low[14];
   static Float_t x_up[14];
   static Float_t y_low[14];
@@ -93,6 +96,8 @@ class TriFlow
 
   // mix event
   static Int_t Bin_Centrality; // 9
+  static Int_t Bin_Centrality_01; // 9
+  static Int_t Bin_pT ;
   static Int_t Bin_VertexZ; // 10
   static Int_t Bin_Phi_Psi; // 5
   static Int_t Buffer_depth; // 3
