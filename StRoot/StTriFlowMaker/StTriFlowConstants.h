@@ -57,7 +57,7 @@ class TriFlow
   static Float_t pt_low_spectra[32];
   static Float_t pt_up_spectra[32];
   static Float_t pt_low_phi[3];
-  static Float_t pt_up_phi[3]};
+  static Float_t pt_up_phi[3];
 
   static Float_t x_low[14];
   static Float_t x_up[14];
