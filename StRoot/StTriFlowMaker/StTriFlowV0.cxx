@@ -41,7 +41,7 @@ void StTriFlowV0::InitPhi()
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
     h_dip_angle = new TH1F("h_dip_angle","h_dip_angle",200,-1,2.0*TMath::Pi());
-    h_mT = new TH1F("h_mT","h_mT",200,0.0,10);
+    // h_mT = new TH1F("h_mT","h_mT",200,0.0,10);
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
     {
@@ -237,7 +237,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_Mass2->Fill(pt,InvMassAB);
                     h_Mass2_rot->Fill(pt_rot,InvMassAB_rot);
                     // Fill histograms with for QA cuts: dip angle, etc.
-                    h_mT->Fill(d_mT_phi);
+                    // h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
                 }
             }
