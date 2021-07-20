@@ -51,12 +51,17 @@ void StTriFlowV0::InitPhi()
     {
         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
         {
-          TString hist_name = Form("InvMass_SE_ptbin%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data());
-          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(hist_name.Data() ,
-          hist_name.Data() ,
+          TString hist_name_SE = Form("InvMass_SE_ptbin%d_cent%s",pt_bin+1,TriFlow::Centrality_01[cent].Data());
+          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(hist_name_SE.Data() ,
+          hist_name_SE.Data() ,
           200,0.98,1.08);
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
-        }
+          TString hist_name_rot = Form("InvMass_rot_ptbin%d_cent%s",pt_bin+1,TriFlow::Centrality_01[cent].Data());
+          mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(hist_name_rot.Data() ,
+          hist_name_rot.Data() ,
+          200,0.98,1.08);
+          mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
+    }
     }
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality; cent++)
@@ -92,6 +97,7 @@ void StTriFlowV0::WritePhiMass2()
         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
         {
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Write();
+          mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Write();
         }
     }
     mTree_Phi->Write("",TObject::kOverwrite);
@@ -278,6 +284,12 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                              {
                                mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
                              }
+                          if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
+                            TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
+                            {
+                                  mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB_rot);
+                            }
+
                         }
                     }
                 }
