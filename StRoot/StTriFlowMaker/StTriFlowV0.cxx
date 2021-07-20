@@ -51,8 +51,9 @@ void StTriFlowV0::InitPhi()
     {
         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
         {
-          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(Form("Hist_SE_InvM_ptSetA%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data() ),
-          Form("Hist_SE_InvM_ptSetA%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data() ),
+          TString hist_name = Form("InvMass_SE_ptbin%d_cent%s",pt_bin,TriFlow::Centrality_01[cent].Data());
+          mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent] = new TH1F(hist_name.Data() ,
+          hist_name.Data() ,
           200,0.98,1.08);
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
         }
