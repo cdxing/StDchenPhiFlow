@@ -286,7 +286,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Float_t phi_Psi3 = phi_East - Psi3_West;
                         // std::cout << "phi = " << phi_East << std::endl;
                         // std::cout << "psi = " << Psi2_West << std::endl;
-                        std::cout << "flow2 = " << flow2 << std::endl;
+                        // std::cout << "flow2 = " << flow2 << std::endl;
                     }
                     if(passPhiEtaWest(trackAB,0,1))
                     {
@@ -296,7 +296,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Float_t phi_Psi3 = phi_West - Psi3_East;
                         // std::cout << "phi = " << phi_West << std::endl;
                         // std::cout << "psi = " << Psi2_East << std::endl;
-                        std::cout << "flow2 = " << flow2 << std::endl;
+                        // std::cout << "flow2 = " << flow2 << std::endl;
                     }
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);

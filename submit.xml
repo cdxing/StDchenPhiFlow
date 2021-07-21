@@ -3,7 +3,7 @@
 <job minFilesPerProcess="150" fileListSyntax="xrootd" >
 
   <command>
-    starver SL19b
+    starpro
 		cons
 		root4star -q -l -b readPicoDst.C\(\"$FILELIST\",\"$JOBID\"\) &gt;&amp; ${JOBID}.log
 	tar -zcvf ${JOBID}.log.tgz ${JOBID}.log
@@ -27,8 +27,7 @@
 	  <ListLocation>./list/</ListLocation>
   </Generator>
 
-  <output fromScratch="*.root" toURL="file:/star/u/slan/pwg/fastoffline/7p7gev/phitree/out_Phi/" />
-  <output fromScratch="*.log.tgz" toURL="file:/star/u/slan/pwg/fastoffline/7p7gev/phitree/log/" />
+  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/out_Phi/" />
+  <output fromScratch="*.log.tgz" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/log/" />
 
 </job>
-
