@@ -182,7 +182,7 @@ Int_t StTriFlowMaker::Make()
                 }
             }
         }
-        Float_t Psi2_East;
+        Float_t Psi2_East, Psi2_West;
         TVector2 Q2East[TriFlow::EtaGap_total], Q2West[TriFlow::EtaGap_total];
         TVector2 Q3East[TriFlow::EtaGap_total], Q3West[TriFlow::EtaGap_total];
         Int_t NumTrackEast[TriFlow::EtaGap_total], NumTrackWest[TriFlow::EtaGap_total];
@@ -210,6 +210,8 @@ Int_t StTriFlowMaker::Make()
         {
             // Event Plane method
             Psi2_East = mTriFlowCorrection->calShiftAngle2East_EP(runIndex,cent9,vz_sign,0);
+            Psi2_West = mTriFlowCorrection->calShiftAngle2West_EP(runIndex,cent9,vz_sign,0);
+
 
             // get N_prim, N_non_prim, N_Tof_match
             Int_t N_prim = nN_prim;
@@ -232,7 +234,7 @@ Int_t StTriFlowMaker::Make()
             mTriFlowV0->passNumTrackEast(NumTrackEast[0],NumTrackEast[1],NumTrackEast[2],NumTrackEast[3]);
             mTriFlowV0->passNumTrackWest(NumTrackWest[0],NumTrackWest[1],NumTrackWest[2],NumTrackWest[3]);
 
-            mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,reweight);
+            mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,Psi2_West,reweight);
             // cout<<"finish phi meson reconstruction"<<endl;
         }
         mTriFlowCorrection->clear();
