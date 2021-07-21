@@ -683,4 +683,68 @@ void StTriFlowV0::passNumTrackWest(Int_t NumTrackWest_0, Int_t NumTrackWest_1, I
     mTrackEtaWest[2] = NumTrackWest_2;
     mTrackEtaWest[3] = NumTrackWest_3;
 }
+//---------------------------------------------------------------------------------
+
+bool StTriFlowV0::passPhiEtaEast(TLorentzVector track, Int_t i, Int_t Mode) // neg || i = different eta_gap || Mode = 0 Event Plane Mode, Mode = 1 Flow Mode
+{
+    Float_t eta = track.Eta();
+
+    if(Mode == 0) // Event Plane Mode
+    {
+        // eta cut
+        // eta_gap between two sub event plane is 2*mEta_Gap[i]
+        if(!(eta > -1.0*TriFlow::mEtaMax && eta < -1.0*TriFlow::mEta_Gap[i]))
+        {
+            return kFALSE;
+        }
+
+    return kTRUE;
+  }
+  if(Mode == 1) // Flow Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is mEta_Gap[i]
+    if(!(eta > -1.0*TriFlow::mEtaMax && eta < 0.0))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+
+  return kTRUE;
+}
+
+//---------------------------------------------------------------------------------
+
+bool StTriFlowV0::passPhiEtaWest(TLorentzVector track, Int_t i, Int_t Mode) // pos || i = different eta_gap || Mode = 0 Event Plane Mode, Mode = 1 Flow Mode
+{
+  Float_t eta = track.Eta();
+
+  if(Mode == 0) // Event Plane Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is 2*mEta_Gap[i]
+    if(!(eta > TriFlow::mEta_Gap[i] && eta < TriFlow::mEtaMax))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+  if(Mode == 1) // Flow Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is mEta_Gap[i]
+    if(!(eta > 0.0 && eta < TriFlow::mEtaMax))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+
+  return kTRUE;
+}
+
 //------------------------------------------------------------------------------------------------------------------

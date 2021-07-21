@@ -47,6 +47,8 @@ class StTriFlowV0
     void passNumTrackEast(Int_t,Int_t,Int_t,Int_t); // Number of East Track: eta_gap = 0.05, eta_gap = 0.10, eta_gap = 0.20, eta_gap = 0.50
     void passNumTrackWest(Int_t,Int_t,Int_t,Int_t); // Number of West Track: eta_gap = 0.05, eta_gap = 0.10, eta_gap = 0.20, eta_gap = 0.50
 
+    bool passPhiEtaEast(TLorentzVector,Int_t,Int_t);
+    bool passPhiEtaWest(TLorentzVector,Int_t,Int_t);
   private:
     StTriFlowCut *mTriFlowCut;
     StV0TofCorrection *mTofCorr;
