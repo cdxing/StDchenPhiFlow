@@ -61,6 +61,13 @@ void StTriFlowV0::InitPhi()
           hist_name_rot.Data() ,
           200,0.98,1.08);
           mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
+          TString hist_name_profile = Form("flow_InvMass_ptbin%d_cent%s",pt_bin+1,TriFlow::Centrality_01[cent].Data());
+          mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent] = new TProfile(hist_name_profile.Data(),
+          hist_name_profile.Data(),
+          100,0.9,1.1,
+          0,0,"");
+          mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
+          mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetYaxis()->SetTitle("<cos(2(#phi - #psi_{1}))>/R_{1}^{EPD}");
     }
     }
 
@@ -98,6 +105,7 @@ void StTriFlowV0::WritePhiMass2()
         {
           mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Write();
           mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Write();
+          mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Write();
         }
     }
     mTree_Phi->Write("",TObject::kOverwrite);
@@ -283,6 +291,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                              TriFlow::pt_low_phi[pt_bin] <= pt && pt <= TriFlow::pt_up_phi[pt_bin])
                              {
                                mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
+                               mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,trackAB.Phi());
                              }
                           if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
                              TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
