@@ -57,6 +57,7 @@ class StTriFlowV0
     TH1F *h_mT;
     TH1F *h_dip_angle;
     TH1F *h_psi2_east;
+    TH1F *h_psi2_west;
     TH1F *mHist_SE_InvM_ptSetA_centSetA[3][4];
     TH1F *mHist_rotation_InvM_ptSetA_centSetA[3][4];
     TProfile *mProfile_v2_reso_ptSetA_centSetA[3][4];
