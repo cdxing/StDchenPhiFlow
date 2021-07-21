@@ -278,23 +278,21 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         mXuPhiMesonTrack->setFlagB(Bin_Event); // K-
                     }
                     Float_t phi_Psi2 = -999.0;
-                    if(passPhiEtaEast(trackAB,j,1))
+                    if(passPhiEtaEast(trackAB,0,1))
                     {
                         Float_t phi_East = trackAB.Phi();
                         phi_Psi2 = phi_East - Psi2_West;
                         // Float_t phi_Psi3 = phi_East - Psi3_West;
                         		  std::cout << "phi = " << phi_East << std::endl;
-                        		  std::cout << "psi = " << Psi3_West << std::endl;
-                        mTriFlowHistoManger->FillProton(pt,cent9,charge_bin,j,phi_Psi2,Res2_EP,phi_Psi3,Res3_EP,Mass2,reweight,nSigmaPion);
+                        		  std::cout << "psi = " << Psi2_West << std::endl;
                     }
-                    if(passPhiEtaWest(trackAB,j,1))
+                    if(passPhiEtaWest(trackAB,0,1))
                     {
                         Float_t phi_West = trackAB.Phi();
                         phi_Psi2 = phi_West - Psi2_East;
                         // Float_t phi_Psi3 = phi_West - Psi3_East;
                         		  std::cout << "phi = " << phi_West << std::endl;
-                        		  std::cout << "psi = " << Psi3_East << std::endl;
-                        mTriFlowHistoManger->FillProton(pt,cent9,charge_bin,j,phi_Psi2,Res2_EP,phi_Psi3,Res3_EP,Mass2,reweight,nSigmaPion);
+                        		  std::cout << "psi = " << Psi2_East << std::endl;
                     }
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);
