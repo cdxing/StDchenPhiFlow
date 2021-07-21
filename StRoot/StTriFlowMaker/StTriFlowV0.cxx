@@ -64,7 +64,7 @@ void StTriFlowV0::InitPhi()
           TString hist_name_profile = Form("flow_InvMass_ptbin%d_cent%s",pt_bin+1,TriFlow::Centrality_01[cent].Data());
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent] = new TProfile(hist_name_profile.Data(),
           hist_name_profile.Data(),
-          100,0.9,1.1,
+          200,0.98,1.08,
           0,0,"");
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetYaxis()->SetTitle("<cos(2(#phi - #psi_{1}))>/R_{1}^{EPD}");
