@@ -278,7 +278,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         mXuPhiMesonTrack->setFlagB(Bin_Event); // K-
                     }
                     Float_t phi_Psi2 = -999.0;
-                    if(mTriFlowCorrection->passPhiEtaEast(trackAB,j,1))
+                    if(passPhiEtaEast(trackAB,j,1))
                     {
                         Float_t phi_East = trackAB.Phi();
                         phi_Psi2 = phi_East - Psi2_West;
@@ -287,7 +287,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         		  std::cout << "psi = " << Psi3_West << std::endl;
                         mTriFlowHistoManger->FillProton(pt,cent9,charge_bin,j,phi_Psi2,Res2_EP,phi_Psi3,Res3_EP,Mass2,reweight,nSigmaPion);
                     }
-                    if(mTriFlowCorrection->passPhiEtaWest(trackAB,j,1))
+                    if(passPhiEtaWest(trackAB,j,1))
                     {
                         Float_t phi_West = trackAB.Phi();
                         phi_Psi2 = phi_West - Psi2_East;
