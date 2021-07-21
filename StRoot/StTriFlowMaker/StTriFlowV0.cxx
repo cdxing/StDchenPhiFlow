@@ -277,22 +277,24 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         mXuPhiMesonTrack->setFlagA(Bin_Event); // K+
                         mXuPhiMesonTrack->setFlagB(Bin_Event); // K-
                     }
-                    Float_t phi_Psi2 = -999.0;
+                    Float_t phi_Psi2 = -999.0, flow2 = -999.0;
                     if(passPhiEtaEast(trackAB,0,1))
                     {
                         Float_t phi_East = trackAB.Phi();
                         phi_Psi2 = phi_East - Psi2_West;
+                        flow2 = TMath::Cos( 2. * phi_Psi2 )/1.;
                         // Float_t phi_Psi3 = phi_East - Psi3_West;
-                        		  std::cout << "phi = " << phi_East << std::endl;
-                        		  std::cout << "psi = " << Psi2_West << std::endl;
+                        // std::cout << "phi = " << phi_East << std::endl;
+                        // std::cout << "psi = " << Psi2_West << std::endl;
                     }
                     if(passPhiEtaWest(trackAB,0,1))
                     {
                         Float_t phi_West = trackAB.Phi();
                         phi_Psi2 = phi_West - Psi2_East;
+                        flow2 = TMath::Cos( 2. * phi_Psi2 )/1.;
                         // Float_t phi_Psi3 = phi_West - Psi3_East;
-                        		  std::cout << "phi = " << phi_West << std::endl;
-                        		  std::cout << "psi = " << Psi2_East << std::endl;
+                        // std::cout << "phi = " << phi_West << std::endl;
+                        // std::cout << "psi = " << Psi2_East << std::endl;
                     }
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);
@@ -313,7 +315,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                              TriFlow::pt_low_phi[pt_bin] <= pt && pt <= TriFlow::pt_up_phi[pt_bin])
                              {
                                mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
-                               if(phi_Psi2 != -999.0)mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,phi_Psi2);
+                               if(flow2 != -999.0)mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,flow2);
                              }
                           if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
                              TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
