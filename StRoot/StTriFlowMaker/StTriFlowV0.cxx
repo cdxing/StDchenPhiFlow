@@ -285,7 +285,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h2_pT_eta->Fill(eta,pt);
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
-                    h_psi2_east->Fill(Psi2_East);
+                    h_psi2_east->Fill(Psi2);
                     // Fill hisograms for invM fit Method
                     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
                     {
