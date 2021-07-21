@@ -140,6 +140,69 @@ bool StTriFlowCorrection::passTrackEtaWest(StPicoTrack *track, Int_t i, Int_t Mo
 }
 //---------------------------------------------------------------------------------
 
+bool StTriFlowCorrection::passPhiEtaEast(TLorentzVector track, Int_t i, Int_t Mode) // neg || i = different eta_gap || Mode = 0 Event Plane Mode, Mode = 1 Flow Mode
+{
+    Float_t eta = track.Eta();
+
+    if(Mode == 0) // Event Plane Mode
+    {
+        // eta cut
+        // eta_gap between two sub event plane is 2*mEta_Gap[i]
+        if(!(eta > -1.0*TriFlow::mEtaMax && eta < -1.0*TriFlow::mEta_Gap[i]))
+        {
+            return kFALSE;
+        }
+
+    return kTRUE;
+  }
+  if(Mode == 1) // Flow Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is mEta_Gap[i]
+    if(!(eta > -1.0*TriFlow::mEtaMax && eta < 0.0))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+
+  return kTRUE;
+}
+
+//---------------------------------------------------------------------------------
+
+bool StTriFlowCorrection::passPhiEtaWest(TLorentzVector track, Int_t i, Int_t Mode) // pos || i = different eta_gap || Mode = 0 Event Plane Mode, Mode = 1 Flow Mode
+{
+  Float_t eta = track.Eta();
+
+  if(Mode == 0) // Event Plane Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is 2*mEta_Gap[i]
+    if(!(eta > TriFlow::mEta_Gap[i] && eta < TriFlow::mEtaMax))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+  if(Mode == 1) // Flow Mode
+  {
+    // eta cut
+    // eta_gap between two sub event plane is mEta_Gap[i]
+    if(!(eta > 0.0 && eta < TriFlow::mEtaMax))
+    {
+      return kFALSE;
+    }
+
+    return kTRUE;
+  }
+
+  return kTRUE;
+}
+//---------------------------------------------------------------------------------
+
 bool StTriFlowCorrection::passTrackFull(StPicoTrack *track) // Full Event Plane pt Cut
 {
   // pt cut 0.2 - 2.0 GeV/c

@@ -20,6 +20,8 @@ class StTriFlowCorrection : public TObject
     // ReCenter Correction
     bool passTrackEtaEast(StPicoTrack*,Int_t,Int_t);
     bool passTrackEtaWest(StPicoTrack*,Int_t,Int_t);
+    bool passPhiEtaEast(TLorentzVector,Int_t,Int_t);
+    bool passPhiEtaWest(TLorentzVector,Int_t,Int_t);
     bool passTrackFull(StPicoTrack*);
 
     TVector2 calq2Vector(StPicoTrack*);
