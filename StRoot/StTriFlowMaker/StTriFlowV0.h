@@ -8,6 +8,7 @@
 #include "TRandom3.h"
 #include "TVector2.h"
 #include "TVector3.h"
+#include "TProfile.h"
 
 class StPicoDst;
 class StAlexPhiMesonEvent;
