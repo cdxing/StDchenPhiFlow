@@ -19,7 +19,6 @@ class StV0Track;
 class StTriFlowCut;
 class TH1F;
 class TH2F;
-class TProfile;
 class TTree;
 class TVector2;
 class TVector3;
