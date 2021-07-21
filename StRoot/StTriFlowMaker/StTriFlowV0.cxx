@@ -471,7 +471,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 //------------------------------------------------------------------------------------------------------------------
 
 
-void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Float_t vz, Float_t psi2_east, Float_t psi2_west,Float_t reweight)
+void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Float_t vz, Float_t psi2_east, Float_t psi2_west,Float_t reweight,Float_t resolution2)
 {
     StPicoEvent *event = (StPicoEvent*)pico->event();
 
@@ -531,6 +531,7 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
     // store Track Information
     TVector3 mVertexPos = event->primaryVertex();
     float mField = event->bField();
+    cout << "Res2_EP = " << resolution2 << endl;
     //cout << "total track = " << nTracks << endl;
     //cout << "total tof track =  " << pico->numberOfBTofPidTraits() << endl;
     for(Int_t i = 0; i < nTracks; i ++) // loop over all particles in event
