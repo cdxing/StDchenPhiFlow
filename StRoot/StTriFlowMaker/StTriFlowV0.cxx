@@ -156,7 +156,7 @@ void StTriFlowV0::clear_phi(Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2)
 
 void StTriFlowV0::size_phi(Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2)
 {
-    LOG_INFO << "Event Buffer: Centrality = " << cent9 << ", VertexZ = " << Bin_vz << ", Psi2 = " << Bin_Psi2 << endm;
+    LOG_INFO << "Event Buffer: Centrality = " << cent9 << ", VertexZ = " << Bin_vz << ", psi2_east = " << Bin_Psi2 << endm;
     LOG_INFO << "Buffer_depth = " << mEventCounter2[cent9][Bin_vz][Bin_Psi2] << endm;
 
     LOG_INFO << "Size of primaryVertex = " << mPrimaryvertex[cent9][Bin_vz][Bin_Psi2].size() << endm;;
@@ -190,7 +190,7 @@ void StTriFlowV0::size_phi(Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2)
 
 //------------------------------------------------------------------------------------------------------------------
 
-void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2, Float_t Psi2_East) // 0: Same Event, 1: Mix Event
+void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2, Float_t Psi2_East, Float_t Psi2_West) // 0: Same Event, 1: Mix Event
 {
     if(Flag_ME == 0) // same event
     {
@@ -286,6 +286,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
                     h_psi2_east->Fill(Psi2_East);
+                    h_psi2_west->Fill(Psi2_West);
                     // Fill hisograms for invM fit Method
                     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
                     {
@@ -451,7 +452,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
 //------------------------------------------------------------------------------------------------------------------
 
 
-void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Float_t vz, Float_t Psi2, Float_t reweight)
+void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Float_t vz, Float_t psi2_east, Float_t psi2_west,Float_t reweight)
 {
     StPicoEvent *event = (StPicoEvent*)pico->event();
 
@@ -473,7 +474,7 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
     }
     for(Int_t i = 0; i < TriFlow::Bin_Phi_Psi; i++)
     {
-        if((Psi2 > -1.0*psi2_start+i*psi2_bin) && (Psi2 <= -1.0*psi2_start+(i+1)*psi2_bin))
+        if((psi2_east > -1.0*psi2_start+i*psi2_bin) && (psi2_east <= -1.0*psi2_start+(i+1)*psi2_bin))
         {
             Bin_Psi2 = i;
         }
@@ -577,7 +578,7 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
 
     if(Flag_ME == 0) // same event
     {
-        doPhi(Flag_ME,cent9,Bin_vz,Bin_Psi2,Psi2);
+        doPhi(Flag_ME,cent9,Bin_vz,Bin_Psi2,psi2_east,psi2_west);
         clear_phi(cent9,Bin_vz,Bin_Psi2);
     }
 
@@ -585,7 +586,7 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
     {
         if(mEventCounter2[cent9][Bin_vz][Bin_Psi2] == TriFlow::Buffer_depth)
         {
-            doPhi(Flag_ME,cent9,Bin_vz,Bin_Psi2,Psi2);
+            doPhi(Flag_ME,cent9,Bin_vz,Bin_Psi2,psi2_east,psi2_west);
             clear_phi(cent9,Bin_vz,Bin_Psi2);
         }
     }

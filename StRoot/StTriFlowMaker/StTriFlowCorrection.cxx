@@ -348,6 +348,34 @@ Float_t StTriFlowCorrection::calShiftAngle2East_EP(Int_t runIndex, Int_t Cent9, 
     return Psi_Shift;
 }
 
+Float_t StTriFlowCorrection::calShiftAngle2West_EP(Int_t runIndex, Int_t Cent9, Int_t vz_sign, Int_t eta_gap)
+{
+    Float_t Psi_ReCenter = TMath::ATan2(mQ2Vector_West_EP[eta_gap].Y(),mQ2Vector_West_EP[eta_gap].X())/2.0;
+    Float_t mean_sin[5], mean_cos[5];
+    Float_t delta_Psi = 0.0;
+    Float_t Psi_Shift;
+
+    for(Int_t k = 0; k < 5; k++) // Shift Order loop
+    {
+        TString ProName_cos, ProName_sin;
+        TProfile2D *p_cos, *p_sin;
+
+        ProName_cos = Form("CosPsi2_Vertex_%s_EtaGap_%d_Order_%d_West_EP",mVStr[vz_sign].Data(),eta_gap,k);
+        p_cos = (TProfile2D*)mInPutFile_Shift->Get(ProName_cos.Data());
+        mean_cos[k] = p_cos->GetBinContent(p_cos->FindBin((Double_t)runIndex,(Double_t)Cent9));
+
+        ProName_sin = Form("SinPsi2_Vertex_%s_EtaGap_%d_Order_%d_West_EP",mVStr[vz_sign].Data(),eta_gap,k);
+        p_sin = (TProfile2D*)mInPutFile_Shift->Get(ProName_sin.Data());
+        mean_sin[k] = p_sin->GetBinContent(p_sin->FindBin((Double_t)runIndex,(Double_t)Cent9));
+
+        delta_Psi += (1.0/2.0)*(2.0/(Float_t)(k+1))*(-1.0*mean_sin[k]*TMath::Cos(TriFlow::mShiftOrder2[k]*Psi_ReCenter)+mean_cos[k]*TMath::Sin(TriFlow::mShiftOrder2[k]*Psi_ReCenter));
+    }
+
+    Float_t Psi_Shift_raw = Psi_ReCenter + delta_Psi;
+    Psi_Shift = AngleShift(Psi_Shift_raw,2.0);
+
+    return Psi_Shift;
+}
 
 //---------------------------------------------------------------------------------
 

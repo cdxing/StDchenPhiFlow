@@ -31,8 +31,8 @@ class StTriFlowV0
 
     void InitPhi();
 
-    void doPhi(Int_t,Int_t,Int_t,Int_t,Float_t);
-    void MixEvent_Phi(Int_t,StPicoDst*,Int_t,Float_t,Float_t,Float_t);
+    void doPhi(Int_t,Int_t,Int_t,Int_t,Float_t,Float_t);
+    void MixEvent_Phi(Int_t,StPicoDst*,Int_t,Float_t,Float_t,Float_t,Float_t);
     void clear_phi(Int_t,Int_t,Int_t);
     void size_phi(Int_t,Int_t,Int_t);
 
