@@ -40,12 +40,14 @@ void StTriFlowV0::InitPhi()
     TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
     TString HistName_mt = "mT", HistName_dip = "dip_angle";
     TString HistName_ptEta = "pT_eta", HistName_ptY = "pT_y";
+    TString HistName_psi2East = "Psi2_East";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
     h2_pT_eta = new TH2F(HistName_ptEta.Data(),HistName_ptEta.Data(),200,-2.0,2.0,20,0.2,5.0);
     h2_pT_y = new TH2F(HistName_ptY.Data(),HistName_ptY.Data(),200,-2.0,2.0,20,0.2,5.0);
     h_mT = new TH1F(HistName_mt.Data(),HistName_mt.Data(),200,0.0,10);
     h_dip_angle = new TH1F(HistName_dip.Data(),HistName_dip.Data(),200,-(1.0/4.0)*TMath::Pi(),1.0*TMath::Pi());
+    h_psi2_east = new TH1F(HistName_psi2East.Data(),HistName_psi2East.Data(),200,-1.0*TMath::Pi(),1.0*TMath::Pi());
 
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
     {
@@ -99,6 +101,7 @@ void StTriFlowV0::WritePhiMass2()
     h2_pT_y->Write();
     h_mT->Write();
     h_dip_angle->Write();
+    h_psi2_east->Write();
     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
     {
         for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
@@ -282,6 +285,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h2_pT_eta->Fill(eta,pt);
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
+                    h_psi2_east->Fill(Psi2_East);
                     // Fill hisograms for invM fit Method
                     for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
                     {
