@@ -376,7 +376,22 @@ Float_t StTriFlowCorrection::calShiftAngle2West_EP(Int_t runIndex, Int_t Cent9, 
 
     return Psi_Shift;
 }
-
+//Event Plane method
+Float_t StTriFlowCorrection::getResolution2_EP(Int_t Cent9, Int_t eta_gap)
+{
+    TString ProName = Form("Res2_EtaGap_%d_EP",eta_gap);
+    TProfile *p_res2 = (TProfile*)mInPutFile_Res->Get(ProName.Data());
+    Float_t Res_raw = p_res2->GetBinContent(p_res2->FindBin(Cent9));
+    if(Res_raw <= 0)
+    {
+        return -999.9;
+    }
+    else
+    {
+        Float_t Res = TMath::Sqrt(Res_raw);
+        return Res;
+    }
+}
 //---------------------------------------------------------------------------------
 
 void StTriFlowCorrection::clear()

@@ -44,6 +44,8 @@ class StTriFlowCorrection : public TObject
      Float_t calShiftAngle2East_EP(Int_t runIndex, Int_t Cent9, Int_t vz_sign, Int_t eta_gap);
      Float_t calShiftAngle2West_EP(Int_t runIndex, Int_t Cent9, Int_t vz_sign, Int_t eta_gap);
 
+     Float_t getResolution2_EP(Int_t Cent9, Int_t eta_gap);
+
      Float_t AngleShift(Float_t Psi_raw, Float_t order);
 
     TVector2 calPsi2_East_EP(Int_t, Int_t); // 0 = eta_gap, 1 = ShiftOrder: 2, 4, 6, 8, 10
