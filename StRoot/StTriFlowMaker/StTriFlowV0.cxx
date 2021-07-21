@@ -66,7 +66,7 @@ void StTriFlowV0::InitPhi()
           TString hist_name_profile = Form("flow_InvMass_ptbin%d_cent%s",pt_bin+1,TriFlow::Centrality_01[cent].Data());
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent] = new TProfile(hist_name_profile.Data(),
           hist_name_profile.Data(),
-          200,0.98,1.08,
+          100,0.98,1.08,
           0,0,"");
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetXaxis()->SetTitle("m_{inv} [GeV/c^{2}]");
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->GetYaxis()->SetTitle("<cos(2(#phi - #psi_{1}))>/R_{1}^{EPD}");
@@ -286,6 +286,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Float_t phi_Psi3 = phi_East - Psi3_West;
                         // std::cout << "phi = " << phi_East << std::endl;
                         // std::cout << "psi = " << Psi2_West << std::endl;
+                        std::cout << "flow2 = " << flow2 << std::endl;
                     }
                     if(passPhiEtaWest(trackAB,0,1))
                     {
@@ -295,6 +296,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         // Float_t phi_Psi3 = phi_West - Psi3_East;
                         // std::cout << "phi = " << phi_West << std::endl;
                         // std::cout << "psi = " << Psi2_East << std::endl;
+                        std::cout << "flow2 = " << flow2 << std::endl;
                     }
                     // Fill histogram with InvMassAB information
                     h_Mass2->Fill(pt,InvMassAB);
@@ -531,7 +533,7 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
     // store Track Information
     TVector3 mVertexPos = event->primaryVertex();
     float mField = event->bField();
-    cout << "Res2_EP = " << resolution2 << endl;
+    // cout << "Res2_EP = " << resolution2 << endl;
     //cout << "total track = " << nTracks << endl;
     //cout << "total tof track =  " << pico->numberOfBTofPidTraits() << endl;
     for(Int_t i = 0; i < nTracks; i ++) // loop over all particles in event
