@@ -23,7 +23,7 @@ class StTriFlowCut : public TObject
     bool passTrackBasic(StPicoTrack*);
     bool passTrackEP(StPicoTrack*, float);
     bool passTrackPhi(StPicoTrack*, float);
-    bool passDipAngle(Float_t);
+    bool passDipAngle(Double_t);
     bool passSigKaonCut(StPicoTrack*, Float_t);
     Float_t getMass2(StPicoTrack*, StPicoDst*);
 
