@@ -246,6 +246,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     Double_t d_ptB = ltrackB.Perp(), d_pzB = ltrackB.Pz(), d_momB = ltrackB.P();
 
                     Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
+                    if(!StTriFlowCut::passDipAngle(d_dip_angle)) continue;
                     TLorentzVector trackAB      = ltrackA+ltrackB;
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();

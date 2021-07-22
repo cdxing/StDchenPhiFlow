@@ -164,6 +164,15 @@ bool StTriFlowCut::passTrackPhi(StPicoTrack *track, float dca)
 
     return kTRUE;
 }
+bool StTriFlowCut::passDipAngle(Double_t dipAngle)
+{
+  if(dipAngle <= 0.04)
+  {
+    return kFALSE;
+  }
+
+  return kTRUE;
+}
 Float_t StTriFlowCut::getMass2(StPicoTrack *track, StPicoDst *pico)
 {
     Float_t Mass2 = -999.0;
@@ -192,6 +201,3 @@ bool StTriFlowCut::passSigKaonCut(StPicoTrack* track, Float_t scale_nSigma_facto
     }
     return kTRUE;
 }
-
-
-
