@@ -246,7 +246,6 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     Double_t d_ptB = ltrackB.Perp(), d_pzB = ltrackB.Pz(), d_momB = ltrackB.P();
 
                     Double_t d_dip_angle = TMath::ACos((d_ptA*d_ptB+d_pzA*d_pzB) / (d_momA*d_momB) );
-                    if(!StTriFlowCut::passDipAngle(d_dip_angle)) continue;
                     TLorentzVector trackAB      = ltrackA+ltrackB;
                     Double_t InvMassAB          = trackAB.M();
                     Double_t pt = trackAB.Perp();
@@ -310,23 +309,26 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_psi2_east->Fill(Psi2_East);
                     h_psi2_west->Fill(Psi2_West);
                     // Fill hisograms for invM fit Method
-                    for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
+                    if(mTriFlowCut->passDipAngle(d_dip_angle))
                     {
-                        for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
-                        {
-                          if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
-                             TriFlow::pt_low_phi[pt_bin] <= pt && pt <= TriFlow::pt_up_phi[pt_bin])
-                             {
-                               mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
-                               if(phi_Psi2 != -999.9 && Res_EP != -999.9)mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,flow2);
-                             }
-                          if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
-                             TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
-                             {
-                               mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB_rot);
-                             }
+                      for(Int_t cent = 0; cent < TriFlow::Bin_Centrality_01; cent++)
+                      {
+                          for(Int_t pt_bin = 0; pt_bin < TriFlow::Bin_pT; pt_bin++)
+                          {
+                            if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
+                               TriFlow::pt_low_phi[pt_bin] <= pt && pt <= TriFlow::pt_up_phi[pt_bin])
+                               {
+                                 mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
+                                 if(phi_Psi2 != -999.9 && Res_EP != -999.9)mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,flow2);
+                               }
+                            if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
+                               TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
+                               {
+                                 mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB_rot);
+                               }
 
-                        }
+                          }
+                      }
                     }
                 }
             }
