@@ -277,7 +277,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                         mXuPhiMesonTrack->setFlagA(Bin_Event); // K+
                         mXuPhiMesonTrack->setFlagB(Bin_Event); // K-
                     }
-                    Float_t phi_Psi2 = -999.9, flow2 = -999.9;
+                    Float_t phi_Psi2 = -999.0, flow2 = -999.0;
                     if(passPhiEtaEast(trackAB,0,1))
                     {
                         Float_t phi_East = trackAB.Phi();
@@ -320,7 +320,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                                {
                                  mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
                                  // std::cout << "invM = " << InvMassAB << std::endl;
-                                 if(!(phi_Psi2 == -999.9 || Res_EP == -999.9 || flow2 == -999.9))
+                                 if(!(phi_Psi2 == -999.0 || Res_EP == -999.0 || flow2 == -999.0))
                                  {
                                    if(pt_bin==0)std::cout << "phi_Psi2  = " << phi_Psi2 << std::endl;
                                    if(pt_bin==0)std::cout << "Res_EP  = " << Res_EP << std::endl;
