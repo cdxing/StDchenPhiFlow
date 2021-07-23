@@ -319,17 +319,17 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                                TriFlow::pt_low_phi[pt_bin] <= pt && pt < TriFlow::pt_up_phi[pt_bin])
                                {
                                  mHist_SE_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB);
-                                 std::cout << "invM = " << InvMassAB << std::endl;
-                                 if(phi_Psi2 != -999.9 && Res_EP != -999.9 && flow2 != -999.9)
+                                 // std::cout << "invM = " << InvMassAB << std::endl;
+                                 if(!(phi_Psi2 == -999.9 || Res_EP == -999.9 || flow2 == -999.9))
                                  {
-                                   // if(pt_bin==0)std::cout << "ptbin1 flow2 = " << flow2 << std::endl;
+                                   if(pt_bin==0)std::cout << "ptbin1 flow2 = " << flow2 << std::endl;
                                    mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB,flow2);
                                  }
                                }
                             if(TriFlow::cent_low[cent]<= cent9 && cent9 <= TriFlow::cent_up[cent] &&
                                TriFlow::pt_low_phi[pt_bin] <= pt_rot && pt_rot <= TriFlow::pt_up_phi[pt_bin])
                                {
-                                 std::cout << "invM rot = " << InvMassAB_rot << std::endl;
+                                 // std::cout << "invM rot = " << InvMassAB_rot << std::endl;
                                  mHist_rotation_InvM_ptSetA_centSetA[pt_bin][cent]->Fill(InvMassAB_rot);
                                }
 
