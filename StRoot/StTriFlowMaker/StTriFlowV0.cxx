@@ -112,7 +112,7 @@ void StTriFlowV0::WritePhiMass2()
           mProfile_v2_reso_ptSetA_centSetA[pt_bin][cent]->Write();
         }
     }
-    mTree_Phi->Write("",TObject::kOverwrite);
+    //mTree_Phi->Write("",TObject::kOverwrite);
 }
 
 //------------------------------------------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                 }
             }
         }
-        mTree_Phi->Fill();
+        //mTree_Phi->Fill();
     }
 
     if(Flag_ME == 1) // mixed event
@@ -477,7 +477,7 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                 }
             }
         }
-        mTree_Phi->Fill();
+        //mTree_Phi->Fill();
     }
 }
 
