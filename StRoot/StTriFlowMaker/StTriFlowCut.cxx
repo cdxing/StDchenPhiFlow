@@ -168,7 +168,7 @@ bool StTriFlowCut::passDipAngle(Double_t dipAngle)
 {
   if(dipAngle <= 0.04)
   {
-    return kFALSE;
+    return kTRUE;//kFALSE;  //disable dip angle cut
   }
 
   return kTRUE;
