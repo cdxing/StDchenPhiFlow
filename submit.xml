@@ -27,7 +27,7 @@
 	  <ListLocation>./list/</ListLocation>
   </Generator>
 
-  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/out_Phi/" />
-  <output fromScratch="*.log.tgz" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/log/" />
+  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/phi_flow_test/StDchenPhiFlow/out_Phi/" />
+  <output fromScratch="*.log.tgz" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/phi_flow_test/StDchenPhiFlow/log/" />
 
 </job>
