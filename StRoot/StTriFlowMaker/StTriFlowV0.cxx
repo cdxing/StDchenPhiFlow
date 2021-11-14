@@ -39,10 +39,12 @@ void StTriFlowV0::InitPhi()
     mTriFlowCut = new StTriFlowCut(mEnergy);
     TString HistName = "Mass2_pt", HistName_rot = "Mass2_rot_pt";
     TString HistName_mt = "mT", HistName_dip = "dip_angle";
+    TString HistName_azimuEta = "azimuth_eta", HistName_azimuthY = "azimuth_y";
     TString HistName_ptEta = "pT_eta", HistName_ptY = "pT_y";
     TString HistName_psi2East = "Psi2_East", HistName_psi2West = "Psi2_West";
     h_Mass2 = new TH2F(HistName.Data(),HistName.Data(),20,0.2,5.0,200,0.98,1.08);
     h_Mass2_rot = new TH2F(HistName_rot.Data(),HistName_rot.Data(),20,0.2,5.0,200,0.98,1.08);
+    h2_azimu_eta = new TH2F(HistName_azimuEta.Data(),HistName_azimuEta.Data(),200,-2.0,2.0,200,-2.0*TMath::Pi(),2.0*TMath::Pi());
     h2_pT_eta = new TH2F(HistName_ptEta.Data(),HistName_ptEta.Data(),200,-2.0,2.0,20,0.2,5.0);
     h2_pT_y = new TH2F(HistName_ptY.Data(),HistName_ptY.Data(),200,-2.0,2.0,20,0.2,5.0);
     h_mT = new TH1F(HistName_mt.Data(),HistName_mt.Data(),200,0.0,10);
@@ -97,6 +99,7 @@ void StTriFlowV0::WritePhiMass2()
 {
     h_Mass2->Write();
     h_Mass2_rot->Write();
+    h2_azimu_eta->Write();
     h2_pT_eta->Write();
     h2_pT_y->Write();
     h_mT->Write();
@@ -303,7 +306,8 @@ void StTriFlowV0::doPhi(Int_t Flag_ME, Int_t cent9, Int_t Bin_vz, Int_t Bin_Psi2
                     h_Mass2_rot->Fill(pt_rot,InvMassAB_rot);
                     // Fill histograms with for QA cuts: dip angle, etc.
                     h2_pT_y->Fill(rap,pt);
-                    h2_pT_eta->Fill(eta,pt);
+                    h2_azimu_eta->Fill(eta,trackAB.Phi());
+		    h2_pT_eta->Fill(eta,pt);
                     h_mT->Fill(d_mT_phi);
                     h_dip_angle->Fill(d_dip_angle);
                     h_psi2_east->Fill(Psi2_East);
@@ -491,15 +495,15 @@ void StTriFlowV0::MixEvent_Phi(Int_t Flag_ME, StPicoDst *pico, Int_t cent9, Floa
     Int_t Bin_vz, Bin_Psi2;
 
     //Float_t vz_start = TriFlow::mVzMaxMap[event->energy()];
-    Float_t vz_start = 70.0; //   shaowei   same with 39 62GeV
-    Float_t vz_bin = 2*vz_start/TriFlow::Bin_VertexZ;
+    Float_t vz_start = 198.0; //   shaowei   same with 39 62GeV
+    Float_t vz_bin = 4./TriFlow::Bin_VertexZ;
 
     Float_t psi2_start = TMath::Pi()/2.0;
     Float_t psi2_bin = 2*psi2_start/TriFlow::Bin_Phi_Psi;
 
     for(Int_t i = 0; i < TriFlow::Bin_VertexZ; i++)
     {
-        if((vz > -1.0*vz_start+i*vz_bin) && (vz <= -1.0*vz_start+(i+1)*vz_bin))
+        if((vz > vz_start+i*vz_bin) && (vz <= vz_start+(i+1)*vz_bin))
         {
             Bin_vz = i;
         }

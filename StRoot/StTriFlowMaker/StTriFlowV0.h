@@ -54,6 +54,7 @@ class StTriFlowV0
     StV0TofCorrection *mTofCorr;
     TH2F *h_Mass2;
     TH2F *h_Mass2_rot;
+    TH2F *h2_azimu_eta;
     TH2F *h2_pT_eta;
     TH2F *h2_pT_y;
     TH1F *h_mT;

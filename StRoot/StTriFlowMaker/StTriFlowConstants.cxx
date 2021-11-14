@@ -18,7 +18,7 @@ Float_t TriFlow::mDcaTrMax_phi = 2.0; // for phi meson mDcaTrMax = 2.0 to fill a
 Int_t TriFlow::mHitsDedxMin = 5;
 Int_t TriFlow::mHitsFitTPCMin = 15;
 Int_t TriFlow::mHitsMaxTPCMin = 0;
-Float_t TriFlow::mHitsRatioTPCMin = 0.52;
+Float_t TriFlow::mHitsRatioTPCMin = 0.51;
 Float_t TriFlow::mEtaMax = 1.0;
 Float_t TriFlow::mPrimPtMin[5] = {0.15,0.2,0.2,0.2,0.2}; // for event plane reconstruction and for pion, kaon, proton: 0.15 for 200 GeV, 0.2 for BES
 Float_t TriFlow::mGlobPtMin = 0.1; // for phi, Lambda, K0s

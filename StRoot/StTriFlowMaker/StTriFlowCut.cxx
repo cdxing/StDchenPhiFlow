@@ -26,18 +26,13 @@ StTriFlowCut::~StTriFlowCut()
 
 bool StTriFlowCut::isGoodTrigger(StPicoDst *pico)
 {
-    array<unsigned int, 6> const triggers = {
-        610001,
-        610011,
-        610021,
-        610031,
-        610041,
-        610051
+    array<unsigned int, 1> const triggers = {
+        630052
     };
     StPicoEvent *event = pico->event();
     for(unsigned i=0; i<event->triggerIds().size(); i++)
     {
-        //cout << "trigger ID = " << event->triggerIds()[i] << endl;
+      cout << "trigger ID = " << event->triggerIds()[i] << endl;
     }
     for(auto trg: triggers)
     {
@@ -69,20 +64,20 @@ bool StTriFlowCut::passEventCut(StPicoDst *pico)
     const Float_t vx = event->primaryVertex().X();
     const Float_t vy = event->primaryVertex().Y();
     const Float_t vz = event->primaryVertex().Z();
-
+    /*
     if( (vx < 1.e-5 && vx > -1.e-5) &&
             (vy < 1.e-5 && vy > -1.e-5) &&
             (vz < 1.e-5 && vz > -1.e-5)  )
         return kFALSE;
-
+    */
     // vz cut
-    if(fabs(vz) > 70.0)
+    if(fabs(vz-200.0) > 2.0)
     {
         return kFALSE;
     }
     if(event->btofTrayMultiplicity()<2)return kFALSE;
     // vr cut
-    if(sqrt(vx*vx+vy*vy) > 2)
+    if(sqrt(vx*vx+(vy+2.0)*(vy+2.0)) > 2.0)
     {
         return kFALSE;
     }
@@ -111,11 +106,12 @@ bool StTriFlowCut::passTrackBasic(StPicoTrack *track)
 
     // eta cut
     Float_t eta = track->pMom().PseudoRapidity();
+    /*
     if(fabs(eta) > TriFlow::mEtaMax)
     {
         return kFALSE;
     }
-
+    */
     return kTRUE;
 }
 
@@ -125,15 +121,17 @@ bool StTriFlowCut::passTrackEP(StPicoTrack *track, float dca)
 
     if(!passTrackBasic(track)) return kFALSE;
 
+    // dca cut
     // dca cut for event plane reconstruction: 200GeV = 3.0, BES = 1.0
     //if(dca > TriFlow::mDcaEPMax[mEnergy])   // change by shaowei
     //cout << "dcaaaaaaaa = "<< dca << endl;
-    if(dca > 1.0)   // change by shaowei
+    if(dca > 3.0)   // change by shaowei
     {
         return kFALSE;
     }
     //cout << "dca = "<< dca << endl;
 
+    // pt cut for event plane
     // pt cut 0.2 - 2.0 GeV/c
     Float_t pt = track->pMom().Perp();
     Float_t p  = track->pMom().Mag();
@@ -164,6 +162,8 @@ bool StTriFlowCut::passTrackPhi(StPicoTrack *track, float dca)
 
     return kTRUE;
 }
+
+// Dip angle cut
 bool StTriFlowCut::passDipAngle(Double_t dipAngle)
 {
   if(dipAngle <= 0.04)

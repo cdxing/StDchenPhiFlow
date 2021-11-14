@@ -32,7 +32,7 @@ ClassImp(StTriFlowMaker)
     mPicoDst = 0;
     mEnergy = 3;
 
-    mOutPut_Phi = Form("%s_ME.root",jobid);
+    mOutPut_Phi = Form("%s_.root",jobid);
 
 }
 
@@ -103,11 +103,12 @@ Int_t StTriFlowMaker::Make()
 
     // RefMult
     Int_t runId = mPicoEvent->runId();
+    /*
     for(int ii=0; ii<286; ii++)
     {
         //if(runId == badrun[ii]) return kStOK;
     }
-
+    */
     //cout << "runID = " << runId << endl;
     Int_t refMult = mPicoEvent->refMult();
     Float_t vz = mPicoEvent->primaryVertex().Z();
@@ -149,7 +150,7 @@ Int_t StTriFlowMaker::Make()
         float mField = mPicoEvent->bField();
 
         nMatchedToF = mPicoEvent->nBTOFMatch();
-        //cout << "nTracks = " << nTracks << endl;
+       // cout << "nTracks = " << nTracks << endl;
         for(Int_t i = 0; i < nTracks; i++) // track loop
         {
             StPicoTrack *track = (StPicoTrack*)mPicoDst->track(i);
@@ -164,6 +165,7 @@ Int_t StTriFlowMaker::Make()
             }
             if(mTriFlowCut->passTrackEP(track,dca)) // track cut   //shaowei
             {
+	//	cout << "pass track EP cut" << endl;
                 // calculate Q Vector after recentering for full event and eta sub event
                 if(mTriFlowCorrection->passTrackFull(track))
                 {
@@ -206,19 +208,20 @@ Int_t StTriFlowMaker::Make()
             }
         }
 
-        if(mTriFlowCorrection->passTrackEtaNumCut(0))
+        //if(mTriFlowCorrection->passTrackEtaNumCut(0))
         {
+		//cout << "pass track eta Numb cut" << endl; 
             // Event Plane method
             Psi2_East = mTriFlowCorrection->calShiftAngle2East_EP(runIndex,cent9,vz_sign,0);
             Psi2_West = mTriFlowCorrection->calShiftAngle2West_EP(runIndex,cent9,vz_sign,0);
             Res2_EP = mTriFlowCorrection->getResolution2_EP(cent9,0);
-
-            // get N_prim, N_non_prim, N_Tof_match
+            
+	    // get N_prim, N_non_prim, N_Tof_match
             Int_t N_prim = nN_prim;
             Int_t N_non_prim = nN_non_prim;
             Int_t N_Tof_match = nMatchedToF;
-
-            // pass the event information to StTriFlowV0
+            
+	    // pass the event information to StTriFlowV0
             mTriFlowV0->clearEvent();
             mTriFlowV0->passEvent(N_prim, N_non_prim, N_Tof_match);
 
@@ -229,12 +232,20 @@ Int_t StTriFlowMaker::Make()
             // 3rd sub event plane
             mTriFlowV0->passEventPlane3East(Q3East[0],Q3East[1],Q3East[2],Q3East[3]);
             mTriFlowV0->passEventPlane3West(Q3West[0],Q3West[1],Q3West[2],Q3West[3]);
-
             // Number of Track in East and West part of TPC
             mTriFlowV0->passNumTrackEast(NumTrackEast[0],NumTrackEast[1],NumTrackEast[2],NumTrackEast[3]);
             mTriFlowV0->passNumTrackWest(NumTrackWest[0],NumTrackWest[1],NumTrackWest[2],NumTrackWest[3]);
-
-            mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,Psi2_West,reweight,Res2_EP);
+	/*
+	cout << "test 4" << endl;
+	cout << "ME flag: " << TriFlow::Flag_ME << endl;
+	cout << "cent9: "<< cent9 <<endl;
+	cout << "vz: " << vz << endl;
+	cout << "psi_east: " << Psi2_East << endl;
+	cout << "Psi2_West: " << Psi2_West << endl;
+	cout << "reweight: " << reweight << endl;
+	cout << "Res2_EP: " << Res2_EP << endl;
+    	*/    
+    	mTriFlowV0->MixEvent_Phi(TriFlow::Flag_ME,mPicoDst,cent9,vz,Psi2_East,Psi2_West,reweight,Res2_EP);
             // cout<<"finish phi meson reconstruction"<<endl;
         }
         mTriFlowCorrection->clear();
@@ -245,7 +256,7 @@ Int_t StTriFlowMaker::Make()
 int StTriFlowMaker::GetRunIndex(int runID)
 {
     int runIndex=-999;
-    for(int i=0; i<2704; i++)
+    for(int i=0; i<139; i++)
     {
         if(runID==numbers[i])
         {
@@ -258,7 +269,7 @@ int StTriFlowMaker::GetRunIndex(int runID)
 int StTriFlowMaker::Centrality(int gRefMult )
 {
     int centrality;
-    int centFull[9]={4, 9,17,30,50,78, 116,170,205};
+    int centFull[9]={6,12,22,39,64,100,154,191,241};
     if      (gRefMult>=centFull[8]) centrality=8;
     else if (gRefMult>=centFull[7]) centrality=7;
     else if (gRefMult>=centFull[6]) centrality=6;

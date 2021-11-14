@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<job minFilesPerProcess="150" fileListSyntax="xrootd" >
+<job maxFilesPerProcess="50" fileListSyntax="xrootd" >
 
   <command>
-    starpro
+    starver SL20d
 		cons
 		root4star -q -l -b readPicoDst.C\(\"$FILELIST\",\"$JOBID\"\) &gt;&amp; ${JOBID}.log
-	tar -zcvf ${JOBID}.log.tgz ${JOBID}.log
   </command>
 
   <SandBox installer="ZIP">
@@ -16,7 +15,7 @@
     </Package>
   </SandBox>
 
-   <input URL="filelist:/star/u/slan/pwg/fastoffline/7p7gev/list/7p7_fast_pico.list" />
+  <input URL="catalog:star.bnl.gov?production=P19ie,filetype=daq_reco_picoDst,trgsetupname=production_26p5GeV_fixedTarget_2018,library=SL20d,tpx=1,filename~st_physics,sanity=1,storage!=hpss" nFiles="all"/>
 
   <stdout discard="true" />
   <stderr URL="file:./err/$JOBID.err"/>
@@ -27,7 +26,7 @@
 	  <ListLocation>./list/</ListLocation>
   </Generator>
 
-  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/out_Phi/" />
-  <output fromScratch="*.log.tgz" toURL="file:/star/data01/pwg/dchen/fastoffline/7p7gev/StDchenPhiFlow/log/" />
+  <output fromScratch="*.root" toURL="file:/star/data01/pwg/dchen/Ana/7p2GeV_FXT_2018_psi2/StDchenPhiFlow/out_Phi/" />
+  <output fromScratch="*.log" toURL="file:/star/data01/pwg/dchen/Ana/7p2GeV_FXT_2018_psi2/StDchenPhiFlow/log/" />
 
 </job>
